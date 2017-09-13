@@ -10,13 +10,16 @@ angular.module('umbraco.services').factory('archetypeLabelService', function (ar
      */
     function repeatedlyWaitForPromises(promises) {
 
-        // Remember the original number of promises being resolved.
-        var originalLength = promises.length;
-        return $q.all(promises).then(function () {
+        // Extract the promises to a local variable, and empty the original array. This will allow
+        // additional promises to be added to the original array, which will allow for those
+        // additional promises to be processed after the original promises have been processed.
+        var originalPromises = promises.splice(0, promises.length);
+
+        // Wait for all of the original promises to finish processing.
+        return $q.all(originalPromises).then(function () {
 
             // If there are new promises, resolve those too.
-            if (promises.length > originalLength) {
-                promises = promises.slice(originalLength);
+            if (promises.length > 0) {
                 return repeatedlyWaitForPromises(promises);
             }
 
@@ -491,17 +494,18 @@ angular.module('umbraco.services').factory('archetypeLabelService', function (ar
                         });
 
                         if(propertyConfig) {
-                        	var datatype = archetypeCacheService.getDatatypeByGuid(propertyConfig.dataTypeGuid);
+                            templateLabelValue = archetypeCacheService.getDatatypeByGuid(propertyConfig.dataTypeGuid, true)
+                                .then(function (datatype) {
+                                    if (datatype) {
 
-                        	if(datatype) {
+                                        // Try to get built-in label.
+                                        var nativeLabel = getNativeLabel(datatype, rawValue, scope);
+                                        return nativeLabel || rawValue;
 
-                            	//try to get built-in label
-                            	var label = getNativeLabel(datatype, templateLabelValue, scope);
-
-                            	if(label) {
-                        			templateLabelValue = label;
-                        		}
-                        	}
+                                    } else {
+                                        return rawValue;
+                                    }
+                                });
                         }
 
                     }
