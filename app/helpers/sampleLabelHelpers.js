@@ -19,7 +19,7 @@ ArchetypeSampleLabelHelpers.testEntityPromise = function(value, scope, args) {
     //{{ArchetypeSampleLabelHelpers.testEntityPromise(someArchetypePropertyAlias, {foo: 1})}}
     console.log(args);
     
-    return function ($q, entityResource) {
+    return function (entityResource) {
     
         return entityResource.getById(args.foo, 'document').then(function(entity) {
             console.log("Hello from testEntityPromise");
@@ -30,7 +30,7 @@ ArchetypeSampleLabelHelpers.testEntityPromise = function(value, scope, args) {
 };
 
 ArchetypeSampleLabelHelpers.testEntityPromise2 = function(value) {          
-    return function ($q, archetypeCacheService) {
+    return function (archetypeCacheService) {
     
         archetypeCacheService.getEntityById(1054, 'document').then(function(entity) {
             console.log("Hello from testEntityPromise2");
