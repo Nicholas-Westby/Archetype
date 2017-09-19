@@ -12,36 +12,31 @@ ArchetypeSampleLabelHelpers.testPromise = function(value) {
             return "As Promised: " + value;
         }, 1000);
     }
-}
+};
 
 ArchetypeSampleLabelHelpers.testEntityPromise = function(value, scope, args) {
     //hey look, args!
     //{{ArchetypeSampleLabelHelpers.testEntityPromise(someArchetypePropertyAlias, {foo: 1})}}
     console.log(args);
     
-    return function ($q, entityResource) {    
-        var deferred = $q.defer();
+    return function ($q, entityResource) {
     
-        entityResource.getById(args.foo, 'document').then(function(entity) {
+        return entityResource.getById(args.foo, 'document').then(function(entity) {
             console.log("Hello from testEntityPromise");
             console.log(entity);
-            deferred.resolve(entity.name);
+            return entity.name;
         });
-    
-        return deferred.promise;
     }
-}
+};
 
 ArchetypeSampleLabelHelpers.testEntityPromise2 = function(value) {          
-    return function ($q, archetypeCacheService) {    
-        var deferred = $q.defer();
+    return function ($q, archetypeCacheService) {
     
         archetypeCacheService.getEntityById(1054, 'document').then(function(entity) {
             console.log("Hello from testEntityPromise2");
             console.log(entity);
-            deferred.resolve(entity.name);
+            return entity.name;
         });
-    
-        return deferred.promise;
+
     }
-}
+};
