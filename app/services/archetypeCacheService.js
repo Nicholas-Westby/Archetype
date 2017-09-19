@@ -51,7 +51,6 @@ angular.module('umbraco.services').factory('archetypeCacheService', function (ar
             return deferred.promise;
         },
 
-        //perhaps this should return a promise?
         getEntityByUmbracoId: function(udi, type) {
             var deferred = $q.defer();
             
