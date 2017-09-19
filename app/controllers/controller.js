@@ -1,5 +1,5 @@
 {{VERSION}}
-angular.module("umbraco").controller("Imulus.ArchetypeController", function ($scope, $http, $filter, $interpolate, assetsService, angularHelper, notificationsService, $timeout, fileManager, entityResource, archetypeService, archetypeLabelService, archetypeCacheService, archetypePropertyEditorResource, archetypeLocalizationService) {
+angular.module("umbraco").controller("Imulus.ArchetypeController", function ($scope, $http, $filter, $interpolate, assetsService, angularHelper, notificationsService, $timeout, fileManager, archetypeService, archetypeLabelService, archetypeCacheService, archetypeLocalizationService) {
 
     // Variables.
     var draggedParent;
